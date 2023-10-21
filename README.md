@@ -19,5 +19,5 @@ I Recently Started Learning MERN Stack so in MERN i Started with "N" => NodeJSðŸ
 ```
 
 | MongoDB | ExpressJS | React.JS | NodeJS |
-| :------- | :------- | :---------| | :-------|
+| :------- | :------- | :--------- | | :------- |
 | `HOLD` | `HOLD` | `HOLD` | **Learning..**. |
