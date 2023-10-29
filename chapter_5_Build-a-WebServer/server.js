@@ -8,12 +8,18 @@ const http = require("http");
 const logEvent = require("./logEvent");
 
 const EventEmitter = require("events");
-const { dir } = require("console");
+const { dir, error } = require("console");
 
 class Emitter extends EventEmitter {}
 
 // initilize object
 const myEmitter = new Emitter();
+
+myEmitter.on('log',(msg,fileName) => logEvent(msg,fileName));
+
+
+
+
 
 //    setup a port
 
@@ -24,13 +30,31 @@ const serveFile = async(filePath, contentType, response)=>{
 
 try{
 
-const data = await fsPromises.readFile(filePath,'utf8',response.writeHead(200),{'Content-Type':contentType});
+const rawData = await fsPromises.readFile(filePath,
+  
+  !contentType.includes("image") ? 'utf8': "");
 
-response.end(data);
+const data = contentType === 'application/json' ? JSON.parse(rawData) : rawData
+
+response.writeHead(
+
+filePath.includes('404.html') ? 404 : 200,{"Content-Type":contentType} 
+
+
+)
+
+
+response.end(
+
+contentType === "application.json" ? JSON.stringify(data) : data
+
+);
 
 
 }catch(err){
     console.error(err);
+    
+  myEmitter.emit('log',`${error.name}\t${error.message}`,'errLog.txt');
     response.statusCode = 500;
     response.end();
 }
@@ -44,6 +68,8 @@ response.end(data);
 
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method);
+
+  myEmitter.emit('log',`${req.url}\t${req.method}`,'reqLog.txt');
 
   // A way to Serve a Page
 
@@ -185,7 +211,6 @@ serveFile(path.join(__dirname,"views","404.html"),"text/html",res);
 // Listen to port
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// myEmitter.on('log',(msg) => logsEvents(msg));
 
 // setTimeout(()=>{
 
