@@ -34,6 +34,10 @@ catch(err) {  console.error(err)  }
 fileOps()
 
 
+// const os = require('os');
+// console.log(os.cpus.length);
+
+
 
 // fs.readFile('./Files/intro.txt',(err,data)=>{
 
@@ -61,14 +65,11 @@ fileOps()
 //
 
 
-
-
 // path object is a built in object in NodeJS that help us to work with our paths in different
 // operating systems such as Windows, macOS, Linux etc... because when you work with 
 //different OS and write hardcode path so this is not acceptable for others operating systems
 // because in Windows we seprate our path to backslash "/" and in Unix Based Operating Systems
 //  we work with Forward slash "\" so that's why we pass adress path segments such as  our files and directory names in path.join() method  and and path.join() automatically create our path and also they dynamically adapt path separtor based on operating systems
-
 
 
 
